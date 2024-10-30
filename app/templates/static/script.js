@@ -2,8 +2,8 @@
 function previewAndSubmit(event) {
   const fileInput = event.target;
   const reader = new FileReader();
-  const iconContainer = document.getElementById("iconContainer");
-  const uploadedImage = document.getElementById("uploadedImage");
+  const iconContainer = document.getElementById("icon-container");
+  const uploadedImage = document.getElementById("uploaded-image");
 
   // Tampilkan pratinjau gambar dan ganti ikon cloud
   if (fileInput.files && fileInput.files[0]) {
@@ -45,3 +45,8 @@ function previewAndSubmit(event) {
     console.error("No file selected");
   }
 }
+
+// Menambahkan event listener untuk file input
+document
+  .getElementById("file-input")
+  .addEventListener("change", previewAndSubmit);
