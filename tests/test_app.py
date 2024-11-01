@@ -1,5 +1,7 @@
 import unittest
+
 from app.app import app
+
 
 class ApiTestCase(unittest.TestCase):
     def setUp(self):
@@ -9,6 +11,7 @@ class ApiTestCase(unittest.TestCase):
         response = self.client.post("/upload")
         self.assertEqual(response.status_code, 400)
         self.assertIn(b"No file uploaded", response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
