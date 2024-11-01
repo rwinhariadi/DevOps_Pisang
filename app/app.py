@@ -14,10 +14,14 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# Tentukan path model secara dinamis berdasarkan lokasi file script ini
+base_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(base_dir, "model_pisang.h5")
+
 # Memuat model yang sudah dilatih
 print("Current working directory:", os.getcwd())
-print("Files in directory:", os.listdir())
-model = load_model("/app/model/model_pisang.h5")
+print("Files in directory:", os.listdir(base_dir))
+model = load_model(model_path)
 
 
 # Fungsi untuk preprocessing gambar

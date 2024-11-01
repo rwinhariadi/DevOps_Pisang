@@ -1,5 +1,2 @@
 # Ignore dataset folder
 pisang_dataset/
-
-# Ignore model file
-model/model_pisang.h5
