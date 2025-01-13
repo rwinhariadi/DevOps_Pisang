@@ -99,7 +99,8 @@ h1 {
   cursor: pointer;
   font-weight: bold;
   font-size: 1em;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 20%);
+  margin-top: 20px;
 }
 
 .nav-btn:hover {
@@ -130,10 +131,9 @@ h1 {
 .minion {
   width: 160px;
   margin: 0 20px;
-  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 4px 4px rgb(0 0 0 / 50%));
 }
 
-/*history.html */
 /* Mengatur tampilan latar belakang dan font */
 body.history-page {
   background-image: url("static/pisang.jpeg");
@@ -174,7 +174,7 @@ body.history-page {
   border-radius: 10px;
   padding: 10px;
   background-color: #f9f9f9;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 20%);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 20%);
   text-align: center;
   height: 250px; /* Kurangi tinggi kartu */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -182,7 +182,7 @@ body.history-page {
 
 .history-card:hover {
   transform: translateY(-5px); /* Efek hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 30%);
+  box-shadow: 0 6px 10px rgb(0 0 0 / 30%);
 }
 
 /* Gaya untuk gambar di dalam kartu */
@@ -199,22 +199,4 @@ body.history-page {
   font-size: 1em;
   margin: 1px 0;
   color: #4c4a68;
-}
-
-/* Tombol navigasi (Back to Home) */
-.nav-btn {
-  background-color: #4c4a68;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1em;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 20%);
-  margin-top: 20px;
-}
-
-.nav-btn:hover {
-  background-color: #6c6a89;
 }

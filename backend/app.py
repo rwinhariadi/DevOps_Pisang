@@ -32,7 +32,7 @@ except Exception as e:
     model = None
 
 # Data history (disimpan dalam memori untuk sementara)
-history = []
+history = [] # type: ignore
 
 
 # Fungsi untuk preprocessing gambar
