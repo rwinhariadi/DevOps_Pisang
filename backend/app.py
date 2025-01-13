@@ -1,12 +1,13 @@
+import base64
 import logging
 import os
+from io import BytesIO
+
+import numpy as np
 from flask import Flask, jsonify, request
 from flask_cors import CORS  # Untuk menangani CORS
 from PIL import Image
-import numpy as np
 from tensorflow.keras.models import load_model
-from io import BytesIO
-import base64
 
 # Inisialisasi aplikasi Flask
 app = Flask(__name__)
@@ -33,6 +34,7 @@ except Exception as e:
 # Data history (disimpan dalam memori untuk sementara)
 history = []
 
+
 # Fungsi untuk preprocessing gambar
 def preprocess_image(image, target_size=(150, 150)):
     try:
@@ -43,6 +45,7 @@ def preprocess_image(image, target_size=(150, 150)):
     except Exception as e:
         logging.error(f"Error in image preprocessing: {e}")
         raise
+
 
 # Endpoint untuk menerima unggahan gambar dan melakukan prediksi
 @app.route("/upload", methods=["POST"])
@@ -90,7 +93,7 @@ def upload_image():
         logging.error(f"Error processing image: {e}")
         return jsonify({"error": "Gagal memproses gambar"}), 500
 
-# Endpoint untuk menambahkan data ke history (opsional jika tidak langsung dari /upload)
+
 @app.route("/add-history", methods=["POST"])
 def add_history():
     try:
@@ -101,16 +104,18 @@ def add_history():
             return jsonify({"message": "History added successfully"}), 200
         else:
             logging.info("Duplicate image detected in add-history, not added")
-            return jsonify({"message": "Duplicate image detected, not added"}), 200
+            return jsonify({"message": "Duplicate image detected"}), 200
     except Exception as e:
         logging.error(f"Error adding history: {e}")
         return jsonify({"error": "Failed to add history"}), 500
+
 
 # Endpoint untuk mengambil data history
 @app.route("/get-history", methods=["GET"])
 def get_history():
     logging.info("History data fetched successfully")
     return jsonify(history), 200
+
 
 # Jalankan aplikasi Flask
 if __name__ == "__main__":
