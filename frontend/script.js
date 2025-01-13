@@ -113,7 +113,7 @@ if (currentPage.includes('history.html')) {
   }
 }
 
-function addToHistory(item) {
+function addToHistory (item) {
   const historyCards = document.getElementById('history-cards')
   if (!historyCards) {
     console.warn('History container not found, skipping addition')
