@@ -1,6 +1,6 @@
 import unittest
 
-from app.app import app
+from backend import app
 
 
 class ApiTestCase(unittest.TestCase):
