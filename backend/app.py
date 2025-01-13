@@ -31,8 +31,9 @@ except Exception as e:
     logging.error(f"Error loading model: {e}")
     model = None
 
+
 # Data history (disimpan dalam memori untuk sementara)
-history = [] # type: ignore
+history = []  # type: ignore
 
 
 # Fungsi untuk preprocessing gambar

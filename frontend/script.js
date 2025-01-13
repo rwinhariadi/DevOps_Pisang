@@ -8,7 +8,7 @@ if (currentPage.includes('index.html') || currentPage === '/') {
   const fileInput = document.getElementById('file-input')
 
   if (fileInput) {
-    fileInput.addEventListener('change', (event) => {
+    fileInput.addEventListener('change', event => {
       const reader = new FileReader()
       const iconContainer = document.getElementById('icon-container')
       const uploadedImage = document.getElementById('uploaded-image')
@@ -26,15 +26,15 @@ if (currentPage.includes('index.html') || currentPage === '/') {
 
         fetch('http://localhost:8080/upload', {
           method: 'POST',
-          body: formData,
+          body: formData
         })
-          .then((response) => {
+          .then(response => {
             if (!response.ok) {
               throw new Error(`Gagal memproses gambar. Status: ${response.status}`)
             }
             return response.json()
           })
-          .then((result) => {
+          .then(result => {
             if (result.error) {
               throw new Error(result.error)
             }
@@ -46,11 +46,11 @@ if (currentPage.includes('index.html') || currentPage === '/') {
 
             addToHistory({
               image: uploadedImage.src,
-              color: color,
-              status: result.prediction,
+              color,
+              status: result.prediction
             })
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('Error:', error)
             document.getElementById('result').innerText = 'Gagal memproses gambar'
             document.getElementById('color').innerText = '-'
@@ -77,14 +77,14 @@ if (currentPage.includes('history.html')) {
     historyCards.innerHTML = ''
 
     fetch('http://localhost:8080/get-history')
-      .then((response) => {
+      .then(response => {
         console.log('Fetch response:', response)
         if (!response.ok) {
           throw new Error('Failed to fetch history data')
         }
         return response.json()
       })
-      .then((data) => {
+      .then(data => {
         console.log('Data fetched:', data)
 
         const totalCards = Math.max(data.length, 10)
@@ -100,14 +100,14 @@ if (currentPage.includes('history.html')) {
             `
           } else {
             card.innerHTML = `
-              <p style='color: #ccc font-size: 1.2em margin: auto'>Kosong</p>
+              <p style='color: #ccc; font-size: 1.2em; margin: auto;'>Kosong</p>
             `
           }
 
           historyCards.appendChild(card)
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching history:', error)
       })
   }
