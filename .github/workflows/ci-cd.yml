@@ -21,7 +21,9 @@ jobs:
       # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        with:
+          lfs: true
+          
       # Pull LFS files (optional, if using LFS)
       - name: Pull LFS files
         run: git lfs pull
@@ -49,7 +51,9 @@ jobs:
       # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        with:
+          lfs: true
+          
       # Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
