@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: backend-service
   namespace: pisang
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
 spec:
   selector:
     app: backend
