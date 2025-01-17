@@ -2,7 +2,7 @@ console.log('Script.js loaded successfully')
 
 const METRICS_ENDPOINT = 'http://localhost:8080/metrics/frontend'
 
-function sendMetric(metricName, value, labels = {}) {
+function sendMetric (metricName, value, labels = {}) {
   fetch(METRICS_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -13,18 +13,17 @@ function sendMetric(metricName, value, labels = {}) {
 }
 
 window.addEventListener('load', () => {
-  const [navigationTiming] = performance.getEntriesByType('navigation');
+  const [navigationTiming] = performance.getEntriesByType('navigation')
 
   if (navigationTiming) {
-    const pageLoadTime = navigationTiming.loadEventEnd - navigationTiming.startTime;
-    console.log(`Page Load Time: ${pageLoadTime}ms`);
+    const pageLoadTime = navigationTiming.loadEventEnd - navigationTiming.startTime
+    console.log(`Page Load Time: ${pageLoadTime}ms`)
 
-    sendMetric('page_load_time', pageLoadTime);
+    sendMetric('page_load_time', pageLoadTime)
   } else {
-    console.warn('PerformanceNavigationTiming is not supported');
+    console.warn('PerformanceNavigationTiming is not supported')
   }
-});
-
+})
 
 const currentPage = window.location.pathname
 
@@ -150,8 +149,8 @@ if (currentPage.includes('history.html')) {
         }
         
         sendMetric('history_cards_displayed', totalCards)
-        
       })
+      
       .catch(error => {
         console.error('Error fetching history:', error)
       })
