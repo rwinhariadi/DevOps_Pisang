@@ -147,8 +147,7 @@ def upload_image():
             logging.info("Duplicate image detected, not added to history")
 
         # Return response to frontend
-        return jsonify({"prediction": result,
-                        "accuracy": round(confidence * 100, 2)})
+        return jsonify({"prediction": result, "accuracy": round(confidence * 100, 2)})
     except Exception as e:
         logging.error(f"Error processing image: {e}")
         return jsonify({"error": "Gagal memproses gambar"}), 500
