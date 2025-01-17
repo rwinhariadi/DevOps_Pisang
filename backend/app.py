@@ -50,8 +50,7 @@ REQUEST_LATENCY = Histogram(
     "Latency of HTTP requests in seconds",
     ["endpoint"],
 )
-PREDICTION_COUNT = Counter("model_predictions_total",
-                           "Total number of predictions")
+PREDICTION_COUNT = Counter("model_predictions_total", "Total number of predictions")
 PREDICTION_LATENCY = Histogram(
     "model_prediction_latency_seconds", "Latency of predictions in seconds"
 )
@@ -69,8 +68,7 @@ DUPLICATE_IMAGES_DETECTED = Counter(
 HISTORY_SIZE = Gauge("history_size", "Number of entries in history")
 
 FRONTEND_METRIC_COUNTER = Counter(
-    "frontend_metrics_total",
-    "Total metrics received from frontend", ["metric_name"]
+    "frontend_metrics_total", "Total metrics received from frontend", ["metric_name"]
 )
 
 
@@ -95,8 +93,7 @@ def start_timer():
 @app.after_request
 def log_request(response):
     latency = time.time() - request.start_time
-    REQUEST_COUNT.labels(request.method, request.path,
-                         response.status_code).inc()
+    REQUEST_COUNT.labels(request.method, request.path, response.status_code).inc()
     REQUEST_LATENCY.labels(request.path).observe(latency)
     return response
 
@@ -142,8 +139,7 @@ def upload_image():
         # Cek apakah data sudah ada di history
         if not any(item["image"] == image_data for item in history):
             UNIQUE_IMAGES_PROCESSED.inc()
-            history.append({"image": image_data,
-                            "color": color, "status": result})
+            history.append({"image": image_data, "color": color, "status": result})
             HISTORY_SIZE.set(len(history))
             logging.info("Data added to history")
         else:
@@ -212,14 +208,11 @@ def receive_frontend_metrics():
 
     except Exception as e:
         logging.error(f"Error receiving frontend metrics: {e}")
-        return jsonify({"error":
-                        "Internal server error"}), 500
+        return jsonify({"error": "Internal server error"}), 500
 
 
 # Integrasi Prometheus dengan Flask
-app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
-    "/metrics": make_wsgi_app()
-    })
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
 
 # Jalankan aplikasi Flask
 if __name__ == "__main__":

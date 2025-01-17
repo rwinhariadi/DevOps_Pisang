@@ -147,10 +147,8 @@ if (currentPage.includes('history.html')) {
 
           historyCards.appendChild(card)
         }
-        
         sendMetric('history_cards_displayed', totalCards)
       })
-      
       .catch(error => {
         console.error('Error fetching history:', error)
       })
