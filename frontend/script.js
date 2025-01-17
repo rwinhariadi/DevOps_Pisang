@@ -1,5 +1,30 @@
 console.log('Script.js loaded successfully')
 
+const METRICS_ENDPOINT = 'http://localhost:8080/metrics/frontend'
+
+function sendMetric (metricName, value, labels = {}) {
+  fetch(METRICS_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ metric: metricName, value, labels })
+  }).catch(error => {
+    console.error('Failed to send metric:', error)
+  })
+}
+
+window.addEventListener('load', () => {
+  const [navigationTiming] = performance.getEntriesByType('navigation')
+
+  if (navigationTiming) {
+    const pageLoadTime = navigationTiming.loadEventEnd - navigationTiming.startTime
+    console.log(`Page Load Time: ${pageLoadTime}ms`)
+
+    sendMetric('page_load_time', pageLoadTime)
+  } else {
+    console.warn('PerformanceNavigationTiming is not supported')
+  }
+})
+
 const currentPage = window.location.pathname
 
 if (currentPage.includes('index.html') || currentPage === '/') {
@@ -24,11 +49,18 @@ if (currentPage.includes('index.html') || currentPage === '/') {
         const formData = new FormData()
         formData.append('file', event.target.files[0])
 
+        const startTime = performance.now()
+
         fetch('http://localhost:8080/upload', {
           method: 'POST',
           body: formData
         })
           .then(response => {
+            const latency = performance.now() - startTime
+            console.log(`API Latency (upload): ${latency}ms`)
+
+            sendMetric('api_latency', latency, { endpoint: '/upload' })
+
             if (!response.ok) {
               throw new Error(`Gagal memproses gambar. Status: ${response.status}`)
             }
@@ -49,6 +81,8 @@ if (currentPage.includes('index.html') || currentPage === '/') {
               color,
               status: result.prediction
             })
+
+            sendMetric('file_uploads', 1)
           })
           .catch(error => {
             console.error('Error:', error)
@@ -76,9 +110,16 @@ if (currentPage.includes('history.html')) {
 
     historyCards.innerHTML = ''
 
+    const startTime = performance.now()
     fetch('http://localhost:8080/get-history')
       .then(response => {
         console.log('Fetch response:', response)
+
+        const latency = performance.now() - startTime
+        console.log(`API Latency (get-history): ${latency}ms`)
+
+        sendMetric('api_latency', latency, { endpoint: '/get-history' })
+
         if (!response.ok) {
           throw new Error('Failed to fetch history data')
         }
@@ -106,6 +147,7 @@ if (currentPage.includes('history.html')) {
 
           historyCards.appendChild(card)
         }
+        sendMetric('history_cards_displayed', totalCards)
       })
       .catch(error => {
         console.error('Error fetching history:', error)
